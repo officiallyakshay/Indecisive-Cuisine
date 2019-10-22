@@ -1,13 +1,23 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {connect} from 'react-redux'
+import { Link } from 'react-router-dom';
 
-const Nav = props => {
+const Nav = (props) => {
+  console.log('hi', props)
   return (
-    <div>
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='/indecisive'>Indecisive?</NavLink>
-    </div>
+    <header>
+      <nav>
+        <Link to='/' className={ props.location.pathname === '/' ? 'selected' : ''}>Home</Link>
+        <Link to='/restaurants' className={ props.location.pathname === '/restaurants' ? 'selected' : ''}>Indecisive?</Link>
+      </nav>
+    </header>
   ); 
 }
 
-export default Nav;
+const mapState = state => {
+  return {
+    restaurants: state.restaurants,
+  }
+}
+
+export default connect(mapState)(Nav);

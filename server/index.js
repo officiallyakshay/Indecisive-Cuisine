@@ -26,7 +26,17 @@ app.post('/api/restaurants', async ( req, res, next ) => {
   catch(ex) {
     next(ex);
   }
-})
+});
+
+app.delete('/api/restaurants/:id', async ( req, res, next ) => {
+  try {
+    await Restaurants.destroy({ where: {id: req.params.id} });
+    res.sendStatus(201);
+  }
+  catch(ex) {
+    next(ex);
+  }
+});
 
 db.sync()
   .then(() => {

@@ -6,10 +6,10 @@ import Indecisive from './Indecisive';
 class Routes extends React.Component {
   render() {
     return ( 
-        <Switch>
-          <Route exact path='/' component = { Home } />
-          <Route exact path='/indecisive' component = { Indecisive } />
-        </Switch>
+      <Switch>
+        <Route exact path='/' component = { Home } />
+        <Route exact path='/restaurants' component = { Indecisive } />
+      </Switch>
     );
   }
 }

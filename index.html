@@ -1,6 +1,30 @@
 <html>
 <head>
   <script src="/dist/main.js" defer></script>
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+    }
+    header {
+      display: flex;
+      padding: 1rem;
+      background-color: dodgerBlue;
+      margin-bottom: 1rem;
+    }
+    header a {
+      text-decoration: none;
+      color:white;
+    }
+    header a.selected {
+      font-weight: bold;
+    }
+    nav {
+      flex: 3;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  </style>
 </head>
 <body>
   <div id='root'></div>

@@ -1,8 +1,8 @@
 import React from 'react';
-// import {connect} from 'react-redux';
-// import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
 
-const Home = () => {
+const Home = (props) => {
+  console.log('home', props)
   return (
     <div>
       <h1>Welcome!</h1>
@@ -10,4 +10,10 @@ const Home = () => {
   );
 }
 
-export default Home;
+const mapState = state => {
+  return {
+    restaurants: state.restaurants,
+  }
+}
+
+export default connect(mapState)(Home);

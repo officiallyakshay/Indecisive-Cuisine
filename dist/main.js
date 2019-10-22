@@ -34169,7 +34169,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40796,18 +40796,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Nav */ "./src/Nav.js");
 /* harmony import */ var _Routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Routes */ "./src/Routes.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _reducer_restaurant__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../reducer/restaurant */ "./reducer/restaurant.js");
+
+
 
 
 
 
 class App extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  componentDidMount() {
+    this.props.setRestaurants();
+  }
+
   render() {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Routes__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Nav__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      location: location
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Routes__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      location: location
+    }));
   }
 
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (App);
+const mapDispatchToAppProps = {
+  setRestaurants: _reducer_restaurant__WEBPACK_IMPORTED_MODULE_4__["setRestaurantsThunks"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(null, mapDispatchToAppProps)(App));
 
 /***/ }),
 
@@ -40822,14 +40837,22 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
- // import {connect} from 'react-redux';
-// import { Link } from 'react-router-dom';
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-const Home = () => {
+
+
+const Home = props => {
+  console.log('home', props);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome!"));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Home);
+const mapState = state => {
+  return {
+    restaurants: state.restaurants
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(Home));
 
 /***/ }),
 
@@ -40900,7 +40923,8 @@ class Restaurants extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndecisiveForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
       onChange: this.onChange,
       create: this.create,
-      destroyRestaurant: this.destroyRestaurant
+      destroyRestaurant: this.destroyRestaurant,
+      location: this.props.location
     }));
   }
 
@@ -40946,13 +40970,14 @@ const Restaurants = props => {
     create,
     destroyRestaurant
   } = props;
+  console.log('p', props);
   const cuisines = ['American', 'Mexican', 'Chinese', 'Japanese'];
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     className: "form"
   }, "Name ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "name",
     onChange: onChange
-  }), "Cuisine ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+  }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Cuisine ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
     name: "cuisine",
     onChange: onChange
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -40966,7 +40991,7 @@ const Restaurants = props => {
     key: restaurant.id
   }, "Name: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     to: `/restaurants/${restaurant.id}`
-  }, restaurant.name), "Cuisine: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, restaurant.cuisine), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+  }, restaurant.name), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Cuisine: ", restaurant.cuisine, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: restaurant.imageURL
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: () => destroyRestaurant(restaurant.id)
@@ -40994,19 +41019,30 @@ const mapState = state => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 
 const Nav = props => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
-    to: "/"
-  }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
-    to: "/indecisive"
-  }, "Indecisive?"));
+  console.log('hi', props);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    to: "/",
+    className: props.location.pathname === '/' ? 'selected' : ''
+  }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    to: "/restaurants",
+    className: props.location.pathname === '/restaurants' ? 'selected' : ''
+  }, "Indecisive?")));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Nav);
+const mapState = state => {
+  return {
+    restaurants: state.restaurants
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(Nav));
 
 /***/ }),
 
@@ -41037,7 +41073,7 @@ class Routes extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       component: _Home__WEBPACK_IMPORTED_MODULE_2__["default"]
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
       exact: true,
-      path: "/indecisive",
+      path: "/restaurants",
       component: _Indecisive__WEBPACK_IMPORTED_MODULE_3__["default"]
     }));
   }
