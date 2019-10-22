@@ -13,7 +13,20 @@ app.get('/', (req, res, next)=> {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
+app.get('/api/restaurants', async ( req, res, next ) => {
+  const restaurants = await Restaurants.findAll();
+  res.send(restaurants)
+});
 
+app.post('/api/restaurants', async ( req, res, next ) => {
+  try {
+    const restaurant = await Restaurants.create(req.body);
+    res.send(restaurant);
+  }
+  catch(ex) {
+    next(ex);
+  }
+})
 
 db.sync()
   .then(() => {
